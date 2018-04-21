@@ -1,42 +1,40 @@
+/* tslint:disable */
 import * as wasm from './wasm_lifegame_bg';
 
 export class Universe {
-    static __construct(ptr) {
-        return new Universe(ptr);
-    }
 
-    constructor(ptr) {
-        this.ptr = ptr;
-    }
+                static __construct(ptr) {
+                    return new Universe(ptr);
+                }
 
-    free() {
-        const ptr = this.ptr;
-        this.ptr = 0;
-        wasm.__wbg_universe_free(ptr);
-    }
+                constructor(ptr) {
+                    this.ptr = ptr;
+                }
 
-    static new() {
-        return Universe.__construct(wasm.universe_new());
-    }
-
-    width() {
-        return wasm.universe_width(this.ptr);
-    }
-
-    height() {
-        return wasm.universe_height(this.ptr);
-    }
-
-    cells() {
-        return wasm.universe_cells(this.ptr);
-    }
-    tick() {
-        return wasm.universe_tick(this.ptr);
-    }
+            free() {
+                const ptr = this.ptr;
+                this.ptr = 0;
+                wasm.__wbg_universe_free(ptr);
+            }
+        static new() {
+    return Universe.__construct(wasm.universe_new());
+}
+width() {
+    return wasm.universe_width(this.ptr);
+}
+height() {
+    return wasm.universe_height(this.ptr);
+}
+cells() {
+    return wasm.universe_cells(this.ptr);
+}
+tick() {
+    return wasm.universe_tick(this.ptr);
+}
 }
 
-const TextDecoder = typeof window === 'object' && window.TextDecoder
-    ? window.TextDecoder
+const TextDecoder = typeof self === 'object' && self.TextDecoder
+    ? self.TextDecoder
     : require('util').TextDecoder;
 
 let cachedDecoder = new TextDecoder('utf-8');
@@ -56,3 +54,4 @@ function getStringFromWasm(ptr, len) {
 export function __wbindgen_throw(ptr, len) {
     throw new Error(getStringFromWasm(ptr, len));
 }
+
