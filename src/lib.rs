@@ -36,6 +36,16 @@ pub enum Cell {
     Alive = 1,
 }
 
+// toggle Cell status by clicking in browser
+impl Cell {
+    fn toggle(&mut self) {
+        *self = match *self {
+            Cell::Dead => Cell::Alive,
+            Cell::Alive => Cell::Dead,
+        }
+    }
+}
+
 #[wasm_bindgen]
 pub struct Universe {
     width: u32,
@@ -164,13 +174,3 @@ impl Universe {
 //         Ok(())
 //     }
 // }
-
-// toggle Cell status by clicking in browser
-impl Cell {
-    fn toggle(&mut self) {
-        *self = match *self {
-            Cell::Dead => Cell::Alive,
-            Cell::Alive => Cell::Dead,
-        }
-    }
-}
