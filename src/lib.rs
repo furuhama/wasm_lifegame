@@ -34,6 +34,12 @@ impl Universe {
                 }
             })
             .collect();
+
+        Universe {
+            width,
+            height,
+            cells,
+        }
     }
 
     pub fn width(&self) -> u32 {
@@ -89,7 +95,7 @@ impl Universe {
                 let neighbor_col = (column + delta_col) % self.width;
                 let index = self.get_index(neighbor_row, neighbor_col);
 
-                count += self.cell[index] as u8;
+                count += self.cells[index] as u8;
             }
         }
         count
