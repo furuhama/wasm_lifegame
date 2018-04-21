@@ -53,6 +53,22 @@ export function __wbg_f_now_now_n() {
     return __wbg_f_now_now_n_target();
 }
 
+const __wbg_f_time_time_n_target = console.time;
+
+export function __wbg_f_time_time_n(arg0) {
+    let len0 = getGlobalArgument(0);
+    let v0 = getStringFromWasm(arg0, len0);
+    __wbg_f_time_time_n_target(v0);
+}
+
+const __wbg_f_timeEnd_timeEnd_n_target = console.timeEnd;
+
+export function __wbg_f_timeEnd_timeEnd_n(arg0) {
+    let len0 = getGlobalArgument(0);
+    let v0 = getStringFromWasm(arg0, len0);
+    __wbg_f_timeEnd_timeEnd_n_target(v0);
+}
+
 export class Universe {
 
                 static __construct(ptr) {

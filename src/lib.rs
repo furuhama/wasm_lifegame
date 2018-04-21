@@ -28,12 +28,35 @@ extern "C" {
     #[allow(dead_code)]
     #[wasm_bindgen(js_namespace = performance)]
     fn now() -> f64;
+
+    #[wasm_bindgen(js_namespace = console)]
+    fn time(name: &str);
+
+    #[wasm_bindgen(js_namespace = console)]
+    fn timeEnd(name: &str);
 }
 
 // Usage: log!("this is test.. {}", var)
 #[allow(unused_macros)]
 macro_rules! log {
     ($($t:tt)*) => (log(&format!($($t)*)))
+}
+
+pub struct Timer<'a> {
+    name: &'a str,
+}
+
+impl<'a> Timer<'a> {
+    pub fn new(name: &'a str) -> Timer<'a> {
+        time(name);
+        Timer { name }
+    }
+}
+
+impl<'a> Drop for Timer<'a> {
+    fn drop(&mut self) {
+        timeEnd(self.name);
+    }
 }
 
 // =============================================================
@@ -105,33 +128,43 @@ impl Universe {
     }
 
     pub fn tick(&mut self) {
-        let mut next = self.cells.clone();
+        // let _timer = Timer::new("Universe::tick");
 
-        for row in 0..self.height {
-            for col in 0..self.width {
-                let index = self.get_index(row, col);
-                let cell = self.cells[index];
-                let live_neighbors = self.live_neighbor_count(row, col);
+        let mut next = {
+            // let _timer = Timer::new("allocate next cells");
+            self.cells.clone()
+        };
 
-                // generate log(however, really heavy procesure) ↓
-                //
-                // log!(
-                //     "cell[{}, {}] is initially {:?} and has {} live neighbors",
-                //     row,
-                //     col,
-                //     cell,
-                //     live_neighbors
-                // );
+        {
+            // let _timer = Timer::new("start calculation for next generation");
 
-                let next_cell = match (cell, live_neighbors) {
-                    (Cell::Alive, x) if x < 2 || x > 3 => Cell::Dead,
-                    (Cell::Dead, 3) => Cell::Alive,
-                    (otherwise, _) => otherwise,
-                };
+            for row in 0..self.height {
+                for col in 0..self.width {
+                    let index = self.get_index(row, col);
+                    let cell = self.cells[index];
+                    let live_neighbors = self.live_neighbor_count(row, col);
 
-                next[index] = next_cell;
+                    // generate log(however, really heavy procesure) ↓
+                    //
+                    // log!(
+                    //     "cell[{}, {}] is initially {:?} and has {} live neighbors",
+                    //     row,
+                    //     col,
+                    //     cell,
+                    //     live_neighbors
+                    // );
+
+                    let next_cell = match (cell, live_neighbors) {
+                        (Cell::Alive, x) if x < 2 || x > 3 => Cell::Dead,
+                        (Cell::Dead, 3) => Cell::Alive,
+                        (otherwise, _) => otherwise,
+                    };
+
+                    next[index] = next_cell;
+                }
             }
         }
+        // let _timer = Timer::new("free old cells");
 
         self.cells = next;
     }
