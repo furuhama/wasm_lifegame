@@ -74,6 +74,14 @@ export function greet(arg0) {
     }
 }
 
+const __wbg_f_log_log_n_target = console.log;
+
+export function __wbg_f_log_log_n(arg0) {
+    let len0 = getGlobalArgument(0);
+    let v0 = getStringFromWasm(arg0, len0);
+    __wbg_f_log_log_n_target(v0);
+}
+
 export class Universe {
 
                 static __construct(ptr) {

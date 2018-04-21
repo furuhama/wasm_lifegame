@@ -15,6 +15,17 @@ pub fn greet(name: &str) {
     alert(&format!("Hello, {}!", name));
 }
 
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = console)]
+    fn log(msg: &str);
+}
+
+// Usage: log!("this is test.. {}", var)
+macro_rules! log {
+    ($($t:tt)*) => (log(&format!($($t)*)))
+}
+
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Cell {
@@ -77,6 +88,16 @@ impl Universe {
                 let index = self.get_index(row, col);
                 let cell = self.cells[index];
                 let live_neighbors = self.live_neighbor_count(row, col);
+
+                // generate log(however, really heavy procesure) ↓
+                //
+                // log!(
+                //     "cell[{}, {}] is initially {:?} and has {} live neighbors",
+                //     row,
+                //     col,
+                //     cell,
+                //     live_neighbors
+                // );
 
                 let next_cell = match (cell, live_neighbors) {
                     (Cell::Alive, x) if x < 2 || x > 3 => Cell::Dead,
