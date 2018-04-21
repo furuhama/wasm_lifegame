@@ -66,11 +66,13 @@ const renderLoop = () => {
     // profiling codes
     // if you do not want to profile,
     // just run `universe.tick()` (don't need fps instance & for loop)
-    fps.render();
+    // fps.render();
 
-    for (let i = 0; i < 9; i++) {
-        universe.tick();
-    }
+    // for (let i = 0; i < 9; i++) {
+    //     universe.tick();
+    // }
+
+    universe.tick();
 
     drawGrid();
     drawCells();
@@ -102,11 +104,30 @@ const drawCells = () => {
 
     context.beginPath();
 
+    // for (let row = 0; row < height; row++) {
+    //     for (let col = 0; col < width; col++) {
+    //         const index = getIndex(row, col);
+
+    //         context.fillStyle = cells[index] === DEAD ? DEAD_COLOR : ALIVE_COLOR;
+
+    //         context.fillRect(
+    //             col * (CELL_SIZE + 1) + 1,
+    //             row * (CELL_SIZE + 1) + 1,
+    //             CELL_SIZE,
+    //             CELL_SIZE
+    //         );
+    //     }
+    // }
+
+    // fillStyle() is expensive process, so try to improve performance
+
+    context.fillStyle = ALIVE_COLOR;
     for (let row = 0; row < height; row++) {
         for (let col = 0; col < width; col++) {
             const index = getIndex(row, col);
-
-            context.fillStyle = cells[index] === DEAD ? DEAD_COLOR : ALIVE_COLOR;
+            if (cells[index] !== ALIVE) {
+                continue;
+            }
 
             context.fillRect(
                 col * (CELL_SIZE + 1) + 1,
@@ -116,6 +137,24 @@ const drawCells = () => {
             );
         }
     }
+
+    context.fillStyle = DEAD_COLOR;
+    for (let row = 0; row < height; row++) {
+        for (let col = 0; col < width; col++) {
+            const index = getIndex(row, col);
+            if (cells[index] !== DEAD) {
+                continue;
+            }
+
+            context.fillRect(
+                col * (CELL_SIZE + 1) + 1,
+                row * (CELL_SIZE + 1) + 1,
+                CELL_SIZE,
+                CELL_SIZE
+            );
+        }
+    }
+
     context.stroke();
 };
 
