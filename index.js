@@ -63,6 +63,9 @@ max of last 100 = ${Math.round(max)}
 
 // main function
 const renderLoop = () => {
+    // profiling codes
+    // if you do not want to profile,
+    // just run `universe.tick()` (don't need fps instance & for loop)
     fps.render();
 
     for (let i = 0; i < 9; i++) {
