@@ -77,6 +77,9 @@ cells() {
 tick() {
     return wasm.universe_tick(this.ptr);
 }
+toggle_cell(arg0, arg1) {
+    return wasm.universe_toggle_cell(this.ptr, arg0, arg1);
+}
 }
 
 export function __wbindgen_throw(ptr, len) {

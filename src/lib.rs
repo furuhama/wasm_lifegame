@@ -115,6 +115,11 @@ impl Universe {
 
         self.cells = next;
     }
+
+    pub fn toggle_cell(&mut self, row: u32, column: u32) {
+        let index = self.get_index(row, column);
+        self.cells[index].toggle();
+    }
 }
 
 // private methods
@@ -159,3 +164,13 @@ impl Universe {
 //         Ok(())
 //     }
 // }
+
+// toggle Cell status by clicking in browser
+impl Cell {
+    fn toggle(&mut self) {
+        *self = match *self {
+            Cell::Dead => Cell::Alive,
+            Cell::Alive => Cell::Dead,
+        }
+    }
+}
