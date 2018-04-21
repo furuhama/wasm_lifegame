@@ -35,6 +35,9 @@ extern "C" {
     fn now() -> f64;
 }
 
+// =============================================================
+//            main codes for lifegame from here
+// =============================================================
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Cell {
