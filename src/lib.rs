@@ -21,18 +21,19 @@ extern "C" {
     #[allow(dead_code)]
     #[wasm_bindgen(js_namespace = console)]
     fn log(msg: &str);
+
+    // this function is actually called from js
+    // however, compiler is noizy about this function that it isn't used anywhere
+    // so, I added #[allow] option
+    #[allow(dead_code)]
+    #[wasm_bindgen(js_namespace = performance)]
+    fn now() -> f64;
 }
 
 // Usage: log!("this is test.. {}", var)
 #[allow(unused_macros)]
 macro_rules! log {
     ($($t:tt)*) => (log(&format!($($t)*)))
-}
-
-#[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = performance)]
-    fn now() -> f64;
 }
 
 // =============================================================
