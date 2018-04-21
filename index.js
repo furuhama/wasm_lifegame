@@ -66,13 +66,13 @@ const renderLoop = () => {
     // profiling codes
     // if you do not want to profile,
     // just run `universe.tick()` (don't need fps instance & for loop)
-    // fps.render();
+    fps.render();
 
-    // for (let i = 0; i < 9; i++) {
-    //     universe.tick();
-    // }
+    for (let i = 0; i < 9; i++) {
+        universe.tick();
+    }
 
-    universe.tick();
+    // universe.tick();
 
     drawGrid();
     drawCells();
