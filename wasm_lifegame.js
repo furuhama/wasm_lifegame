@@ -47,6 +47,12 @@ export function __wbg_f_log_log_n(arg0) {
     __wbg_f_log_log_n_target(v0);
 }
 
+const __wbg_f_now_now_n_target = performance.now;
+
+export function __wbg_f_now_now_n() {
+    return __wbg_f_now_now_n_target();
+}
+
 export class Universe {
 
                 static __construct(ptr) {
