@@ -100,13 +100,6 @@ export class Universe {
         static new() {
     return Universe.__construct(wasm.universe_new());
 }
-render() {
-    const ret = wasm.universe_render(this.ptr);
-    const len = getGlobalArgument(0);
-    const realRet = getStringFromWasm(ret, len);
-    wasm.__wbindgen_free(ret, len * 1);
-    return realRet;
-}
 width() {
     return wasm.universe_width(this.ptr);
 }

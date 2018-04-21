@@ -64,9 +64,10 @@ impl Universe {
         }
     }
 
-    pub fn render(&self) -> String {
-        self.to_string()
-    }
+    // [unused function]: render pixels on Javascript side (for perfomance improvement)
+    // pub fn render(&self) -> String {
+    //     self.to_string()
+    // }
 
     pub fn width(&self) -> u32 {
         self.width
@@ -138,19 +139,20 @@ impl Universe {
     }
 }
 
-impl fmt::Display for Universe {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        for line in self.cells.as_slice().chunks(self.width as usize) {
-            for &cell in line {
-                let symbol = if cell == Cell::Dead {
-                    "◻️"
-                } else {
-                    "◼️"
-                };
-                write!(f, "{}", symbol)?;
-            }
-            write!(f, "\n")?;
-        }
-        Ok(())
-    }
-}
+// [unused trait]: render pixels on Javascript side (performance improvement)
+// impl fmt::Display for Universe {
+//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+//         for line in self.cells.as_slice().chunks(self.width as usize) {
+//             for &cell in line {
+//                 let symbol = if cell == Cell::Dead {
+//                     "◻️"
+//                 } else {
+//                     "◼️"
+//                 };
+//                 write!(f, "{}", symbol)?;
+//             }
+//             write!(f, "\n")?;
+//         }
+//         Ok(())
+//     }
+// }
