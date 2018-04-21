@@ -3,25 +3,28 @@
 extern crate wasm_bindgen;
 
 use wasm_bindgen::prelude::*;
-use std::fmt;
+// use std::fmt;
+
+// [unused function]: just for checking connection b/w rust and js on starting wasm web app
+// #[wasm_bindgen]
+// extern "C" {
+//     fn alert(s: &str);
+// }
+
+// #[wasm_bindgen]
+// pub fn greet(name: &str) {
+//     alert(&format!("Hello, {}!", name));
+// }
 
 #[wasm_bindgen]
 extern "C" {
-    fn alert(s: &str);
-}
-
-#[wasm_bindgen]
-pub fn greet(name: &str) {
-    alert(&format!("Hello, {}!", name));
-}
-
-#[wasm_bindgen]
-extern "C" {
+    #[allow(dead_code)]
     #[wasm_bindgen(js_namespace = console)]
     fn log(msg: &str);
 }
 
 // Usage: log!("this is test.. {}", var)
+#[allow(unused_macros)]
 macro_rules! log {
     ($($t:tt)*) => (log(&format!($($t)*)))
 }

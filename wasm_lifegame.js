@@ -1,6 +1,8 @@
 /* tslint:disable */
 import * as wasm from './wasm_lifegame_bg';
 
+const __wbg_f_log_log_n_target = console.log;
+
 const TextDecoder = typeof self === 'object' && self.TextDecoder
     ? self.TextDecoder
     : require('util').TextDecoder;
@@ -38,43 +40,6 @@ function getGlobalArgument(arg) {
     const idx = globalArgumentPtr() / 4 + arg;
     return getUint32Memory()[idx];
 }
-
-export function __wbg_f_alert_alert_n(arg0) {
-    let len0 = getGlobalArgument(0);
-    let v0 = getStringFromWasm(arg0, len0);
-    alert(v0);
-}
-
-const TextEncoder = typeof self === 'object' && self.TextEncoder
-    ? self.TextEncoder
-    : require('util').TextEncoder;
-
-let cachedEncoder = new TextEncoder('utf-8');
-
-function passStringToWasm(arg) {
-
-    const buf = cachedEncoder.encode(arg);
-    const ptr = wasm.__wbindgen_malloc(buf.length);
-    getUint8Memory().set(buf, ptr);
-    return [ptr, buf.length];
-}
-
-function setGlobalArgument(arg, i) {
-    const idx = globalArgumentPtr() / 4 + i;
-    getUint32Memory()[idx] = arg;
-}
-
-export function greet(arg0) {
-    const [ptr0, len0] = passStringToWasm(arg0);
-    setGlobalArgument(len0, 0);
-    try {
-        return wasm.greet(ptr0);
-    } finally {
-        wasm.__wbindgen_free(ptr0, len0 * 1);
-    }
-}
-
-const __wbg_f_log_log_n_target = console.log;
 
 export function __wbg_f_log_log_n(arg0) {
     let len0 = getGlobalArgument(0);
