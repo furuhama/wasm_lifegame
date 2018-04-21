@@ -1,3 +1,13 @@
-import { greet } from "./wasm_lifegame";
+import { Universe } from "./wasm_lifegame";
 
-greet("WebAssembly on Rust");
+const pre = document.getElementById("lifegame-canvas");
+const universe = Universe.new();
+
+const renderLoop = () => {
+    pre.textContent = universe.render();
+    universe.tick();
+
+    requestAnimationFrame(renderLoop);
+};
+
+requestAnimationFrame(renderLoop);
